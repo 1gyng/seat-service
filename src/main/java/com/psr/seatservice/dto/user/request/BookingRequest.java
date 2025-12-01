@@ -10,5 +10,4 @@ public class BookingRequest {
     private String viewingDate;
     private String viewingTime;
     private String programResponse;
-    private int peopleNum;
 }

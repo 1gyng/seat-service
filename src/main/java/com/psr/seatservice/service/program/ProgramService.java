@@ -158,7 +158,7 @@ public class ProgramService {
     public String addBooking(Long programNum, BookingRequest request, User user) {
         int count = getProgramBookingCount(programNum, request.getViewingDate(), request.getViewingTime());
         Program program = getProgramInfo(programNum);
-        if(count < request.getPeopleNum() || request.getPeopleNum() == -1) {
+        if(count < program.getPeopleNum() || program.getPeopleNum() == -1) {
             if(program.getTarget().equals("area")) {
                 //신청대상이 지역일 경우 주소 확인
                 boolean add = checkProgramTargetDetailAndUserAddress(program.getTargetDetail(), user.getAddress());
