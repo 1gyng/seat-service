@@ -40,7 +40,8 @@ public class UserService {
         return userRepository.findProgramBookingInfoByUserId(user.getId());
     }
     public BookingDetailResponse getBookingDetailByUserId(User user, Long bookingNum){
-        return userRepository.findProgramBookingDetailByUserId(user.getId(), bookingNum);
+        return userRepository.findProgramBookingDetailByUserId(user.getId(), bookingNum)
+                .orElseThrow(() -> new IllegalArgumentException("해당 예약 정보가 존재하지 않거나, 본인의 예약이 아닙니다."));
     }
 
     public boolean checkUserId(String userId) {
