@@ -214,8 +214,8 @@ public class BizUserProgramController {
     }
 
     @GetMapping("/{programNum}")
-    public @ResponseBody ResponseEntity<Object> viewingAndPeopleNumList(@PathVariable Long programNum) {
-        List<BizProgramViewingDateAndTimeAndPeopleNumResponse> list = programService.getProgramViewingDateAndTimeAndPeopleNum(programNum);
+    public @ResponseBody ResponseEntity<Object> viewingAndCurrentParticipantsList(@PathVariable Long programNum) {
+        List<BizProgramScheduleResponse> list = programService.getProgramViewingDateAndTimeAndCurrentParticipants(programNum);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 

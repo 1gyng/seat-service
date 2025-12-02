@@ -1,20 +1,22 @@
 package com.psr.seatservice.dto.program.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class BizProgramViewingDateAndTimeAndPeopleNumResponse {
+public class BizProgramScheduleResponse {
     private Long programNum;
     private String viewingDate;
     private String viewingTime;
-    private long peopleNum;
+    @JsonProperty("peopleNum")
+    private long currentParticipants;
 
-    public BizProgramViewingDateAndTimeAndPeopleNumResponse(Long programNum, String viewingDate, String viewingTime, long peopleNum) {
+    public BizProgramScheduleResponse(Long programNum, String viewingDate, String viewingTime, long currentParticipants) {
         this.programNum = programNum;
         this.viewingDate = viewingDate;
         this.viewingTime = viewingTime;
-        this.peopleNum = peopleNum;
+        this.currentParticipants = currentParticipants;
     }
 }

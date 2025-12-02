@@ -1,5 +1,6 @@
 package com.psr.seatservice.dto.program.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +23,8 @@ public class BizUpdateProgramRequest {
     private List<String> viewingDateAndTime;
     //private Long fileId;//poster
     private String type;
-    private int peopleNum;
+    @JsonProperty("peopleNum")
+    private int maxParticipants;
     private Integer seatCol;
     private String seatingChart;
     private String contents;

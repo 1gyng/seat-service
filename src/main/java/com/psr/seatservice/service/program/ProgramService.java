@@ -47,7 +47,7 @@ public class ProgramService {
 
     public Long addProgram(BizAddProgramRequest request, String result, String getTitleJsonString, User user) {
         Program program = new Program(request.getTitle(), request.getPlace(), request.getWay(), request.getTarget(), request.getTargetDetail(), request.getType(), request.getStartDate(),
-                request.getEndDate(), request.getSeatingChart(), request.getSeatCol(), request.getPeopleNum(), request.getContents(), result, getTitleJsonString, user);
+                request.getEndDate(), request.getSeatingChart(), request.getSeatCol(), request.getMaxParticipants(), request.getContents(), result, getTitleJsonString, user);
         programRepository.save(program);
         Long programNum = program.getProgramNum();
 
@@ -60,7 +60,7 @@ public class ProgramService {
         Program program = programRepository.findById(programNum)
                 .orElseThrow(IllegalAccessError::new);
         program.updateInfo(request.getTitle(), request.getPlace(), request.getTarget(),
-                request.getStartDate(), request.getEndDate(), request.getType(), request.getPeopleNum(),
+                request.getStartDate(), request.getEndDate(), request.getType(), request.getMaxParticipants(),
                 request.getSeatCol(), request.getSeatingChart(), request.getWay(), request.getContents(),
                 request.getTargetDetail());
 
@@ -158,7 +158,7 @@ public class ProgramService {
     public String addBooking(Long programNum, BookingRequest request, User user) {
         int count = getProgramBookingCount(programNum, request.getViewingDate(), request.getViewingTime());
         Program program = getProgramInfo(programNum);
-        if(count < program.getPeopleNum() || program.getPeopleNum() == -1) {
+        if(count < program.getMaxParticipants() || program.getMaxParticipants() == -1) {
             if(program.getTarget().equals("area")) {
                 //신청대상이 지역일 경우 주소 확인
                 boolean add = checkProgramTargetDetailAndUserAddress(program.getTargetDetail(), user.getAddress());
@@ -190,9 +190,9 @@ public class ProgramService {
         return addr.contains(targetDetail);
     }
 
-    public List<BizProgramViewingDateAndTimeAndPeopleNumResponse> getProgramViewingDateAndTimeAndPeopleNum(Long programNum) {
+    public List<BizProgramScheduleResponse> getProgramViewingDateAndTimeAndCurrentParticipants(Long programNum) {
         //프로그램 진행 날짜, 시간, 신청인원 목록
-        return programViewingRepository.findViewingDateAndTimeAndPeopleNumByProgramNum(programNum);
+        return programViewingRepository.findViewingDateAndTimeAndCurrentParticipantsByProgramNum(programNum);
     }
 
     public List<BizProgramBookingUserListResponse> getBookingUserList(Long programNum, String date, String time) {
@@ -303,7 +303,7 @@ public class ProgramService {
         return programBookingRepository.findProgramBookingByProgramNum(programNum);
     }
 
-    public List<ProgramListResponse> getUserAroundProgramList(String area, String target, String detail){
+    public List<ProgramListResponse> getProgramsByAddressMatch(String area, String target, String detail){
         List<ProgramListResponse> programs;
         String[] sArea = area.split(" ");
         String str;

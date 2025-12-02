@@ -55,9 +55,9 @@ public class Program {
     private String seatingChart;
     private Integer seatCol;
     @Column(nullable = false)
-    private int peopleNum; //모집인원
+    private int maxParticipants; //모집인원
 
-    public Program(String title, String place, String way, String target, String targetDetail, String type, Date startDate, Date endDate, String seatingChart, Integer seatCol, int peopleNum, String contents, String programHtml, String programQuestion, User user) {
+    public Program(String title, String place, String way, String target, String targetDetail, String type, Date startDate, Date endDate, String seatingChart, Integer seatCol, int maxParticipants, String contents, String programHtml, String programQuestion, User user) {
         this.title = title;
         this.place = place;
         this.way = way;
@@ -68,13 +68,13 @@ public class Program {
         this.endDate = endDate;
         this.seatingChart = seatingChart;
         this.seatCol = seatCol;
-        this.peopleNum = peopleNum;
+        this.maxParticipants = maxParticipants;
         this.contents = contents;
         this.programHtml = programHtml;
         this.programQuestion = programQuestion;
         this.user = user;
     }
-    public void updateInfo(String title, String place, String target, Date startDate, Date endDate, String type, int peopleNum,
+    public void updateInfo(String title, String place, String target, Date startDate, Date endDate, String type, int maxParticipants,
                            Integer seatCol, String seatingChart, String way, String contents, String targetDetail) {
         this.title = title;
         this.place = place;
@@ -82,7 +82,7 @@ public class Program {
         this.startDate = startDate;
         this.endDate = endDate;
         this.type = type;
-        this.peopleNum = peopleNum;
+        this.maxParticipants = maxParticipants;
         this.seatCol = seatCol;
         this.seatingChart = seatingChart;
         this.way = way;

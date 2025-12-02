@@ -14,8 +14,8 @@
     <div>
         <div class="ar">
             <div class="arMenu">
-                <div class="arDiv" id="menuAll" th:onclick="|location.href='@{/around/all}'|"><h5>누구나</h5></div>
-                <div class="arDiv" id="menuArea" th:onclick="|location.href='@{/around/area}'|"><h5>지역</h5></div>
+                <div class="arDiv" id="menuAll" th:onclick="|location.href='@{/around-me/all}'|"><h5>누구나</h5></div>
+                <div class="arDiv" id="menuArea" th:onclick="|location.href='@{/around-me/area}'|"><h5>지역</h5></div>
             </div>
             <div sec:authorize="isAuthenticated()">
                 <select class="form-select" id="areaSelect" onchange="changeSelectValue(this.value)" th:with="area=${#strings.setSplit(userArea, ' ')}">
@@ -83,10 +83,10 @@
     function changeSelectValue(v) {
         let u;
         if(v === "all") {
-            u = "/around/area";
+            u = "/around-me/area";
         }
         else {
-            u = (target === "all") ? `/around/all?detail=${v}` : `/around/area?detail=${v}`;
+            u = (target === "all") ? `/around-me/all?detail=${v}` : `/around-me/area?detail=${v}`;
         }
         location.href = u;
     }

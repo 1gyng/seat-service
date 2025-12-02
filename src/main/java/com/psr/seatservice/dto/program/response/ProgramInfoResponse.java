@@ -1,5 +1,6 @@
 package com.psr.seatservice.dto.program.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.psr.seatservice.domian.program.Program;
 import lombok.Getter;
 
@@ -16,7 +17,8 @@ public class ProgramInfoResponse {
     private Date startDate; //신청시작일
     private Date endDate; //신청마감일
     private String type;
-    private int peopleNum;
+    @JsonProperty("peopleNum")
+    private int maxParticipants;
     private String contents; //상세정보
     private String bizPhone; //문의 번호
     private String bizUserId;
@@ -31,7 +33,7 @@ public class ProgramInfoResponse {
         this.startDate = program.getStartDate();
         this.endDate = program.getEndDate();
         this.type = program.getType();
-        this.peopleNum = program.getPeopleNum();
+        this.maxParticipants = program.getMaxParticipants();
         this.contents = program.getContents();
         this.bizPhone = program.getUser().getPhone();
         this.bizUserId = program.getUser().getUserId();

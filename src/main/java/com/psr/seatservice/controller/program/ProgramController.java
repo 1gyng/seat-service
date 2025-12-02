@@ -125,8 +125,8 @@ public class ProgramController {
         return "program/programSearch";
     }
 
-    @GetMapping( "/around/{target}")
-    public String userAroundProgramListByTarget(@PathVariable String target, @RequestParam(required = false) String detail, @AuthenticationPrincipal User user, Model model) {
+    @GetMapping( "/around-me/{target}")
+    public String programListByAddressMatch(@PathVariable String target, @RequestParam(required = false) String detail, @AuthenticationPrincipal User user, Model model) {
         String[] arr = user.getAddress().split(" ");
         String area;
 
@@ -137,11 +137,11 @@ public class ProgramController {
             area = arr[0] + " " + arr[1];
 
         if (target.equals("all") || target.equals("area")) {
-            List<ProgramListResponse> placeList = programService.getUserAroundProgramList(area, target, detail);
+            List<ProgramListResponse> placeList = programService.getProgramsByAddressMatch(area, target, detail);
             model.addAttribute("programs", placeList);
             model.addAttribute("target", target);
             model.addAttribute("userArea", area);
         }
-        return "program/userAroundProgramList";
+        return "program/userProgramListByAddressMatch";
     }
 }
