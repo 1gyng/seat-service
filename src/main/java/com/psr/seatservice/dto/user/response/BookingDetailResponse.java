@@ -23,8 +23,9 @@ public class BookingDetailResponse {
     private Integer seatNum;
     private Long bookingNum;
     private String filename;
+    private String bookingUuid;
 
-    public BookingDetailResponse(Long programNum, String title, Date endDate, String place, String type, String way, Date bookingDate, Date updateDate, String reason, String status, String viewingDate, String viewingTime, Integer seatNum, Long bookingNum) {
+    public BookingDetailResponse(Long programNum, String title, Date endDate, String place, String type, String way, Date bookingDate, Date updateDate, String reason, String status, String viewingDate, String viewingTime, Integer seatNum, Long bookingNum, String bookingUuid) {
         this.programNum = programNum;
         this.title = title;
         this.endDate = endDate;
@@ -39,5 +40,6 @@ public class BookingDetailResponse {
         this.viewingTime = viewingTime;
         this.seatNum = seatNum;
         this.bookingNum = bookingNum;
+        this.bookingUuid = bookingUuid;
     }
 }

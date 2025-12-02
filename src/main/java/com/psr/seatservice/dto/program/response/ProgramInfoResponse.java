@@ -17,7 +17,6 @@ public class ProgramInfoResponse {
     private Date startDate; //신청시작일
     private Date endDate; //신청마감일
     private String type;
-    @JsonProperty("peopleNum")
     private int maxParticipants;
     private String contents; //상세정보
     private String bizPhone; //문의 번호

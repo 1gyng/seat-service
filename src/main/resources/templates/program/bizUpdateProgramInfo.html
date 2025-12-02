@@ -80,8 +80,8 @@
         <hr>
         <div>
             <label for="endDate" class="normalLabel">모집 인원</label>
-            <label id="peopleNumLabel"><input type="checkbox" id="peopleChBox" name="peopleNum" value=-1 onchange="peopleNumValue()">무제한</label>
-            <input  type="text" id="peopleNum" name="peopleNum" th:value="${programInfo.peopleNum}" onchange="writeNum(-5)" />
+            <label id="peopleNumLabel"><input type="checkbox" id="peopleChBox" name="maxParticipants" value=-1 onchange="peopleNumValue()">무제한</label>
+            <input  type="text" id="peopleNum" name="maxParticipants" th:value="${programInfo.maxParticipants}" onchange="writeNum(-5)" />
             <button type="button" id="isSeatColSelect" onclick="openPopup()">좌석 수정</button>
             <button type="button" id="isNotSeatColSelect" onclick="openPopup()">좌석 추가</button>
             <button type="button" id="deleteChart" th:attr="bookCount=${bookingCount}"onclick="deleteSeatChart(this.getAttribute('bookCount'))">좌석 삭제</button>
@@ -168,7 +168,7 @@ con.textContent = conLine.innerText;
 $('.summernote').summernote('code', [[${programInfo.contents}]]);
 
 //무제한 체크
-if(programInfo.peopleNum === -1){
+if(programInfo.maxParticipants === -1){
     document.getElementById("peopleChBox").checked = true;
     document.getElementById("peopleNum").style.display = "none";
 }
@@ -243,10 +243,10 @@ if(programInfo.seatCol !== null){
     people.readOnly=true;
     people.disabled = true;
 }
-if(programInfo.peopleNum === -1){
+if(programInfo.maxParticipants === -1){
     people.value = "무제한";
 }else{
-    people.value = programInfo.peopleNum;
+    people.value = programInfo.maxParticipants;
 }
 
 var selectElement = document.getElementById("drop");

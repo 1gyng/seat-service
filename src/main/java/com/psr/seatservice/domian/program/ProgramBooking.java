@@ -59,11 +59,13 @@ public class ProgramBooking {
     @Column(columnDefinition = "json", name = "program_response")
     private String programResponse;
 
+    private String bookingUuid;
+
     public ProgramBooking(Integer seatNum) {
         this.seatNum = seatNum;
     }
 
-    public ProgramBooking(Long programNum, String viewingDate, String viewingTime, Integer seatNum, String status, String programResponse, User user) {
+    public ProgramBooking(Long programNum, String viewingDate, String viewingTime, Integer seatNum, String status, String programResponse, User user, String bookingUuid) {
         this.programNum = programNum;
         this.viewingDate = viewingDate;
         this.viewingTime = viewingTime;
@@ -71,6 +73,7 @@ public class ProgramBooking {
         this.status = status;
         this.programResponse = programResponse;
         this.user = user;
+        this.bookingUuid = bookingUuid;
     }
 
     public void updateStatus(String status) {

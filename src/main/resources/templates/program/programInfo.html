@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <th>모집인원</th>
-                    <td th:text="${programInfo.peopleNum} == -1? '무제한' : ${programInfo.peopleNum} + '명'"></td>
+                    <td th:text="${programInfo.maxParticipants} == -1? '무제한' : ${programInfo.maxParticipants} + '명'"></td>
                 </tr>
                 <tr>
                     <th>신청기간</th>
@@ -73,7 +73,7 @@
             </div>
             <div id="appDiv">
                 <div th:if="${#dates.createToday().compareTo(programInfo.startDate) >= 0} and ${programInfo.endDate.compareTo(#dates.createToday()) >= 0} and !${#authorization.expression('hasRole(''' + 'BIZ' + ''')')}" class="row justify-content-end" style="padding-right: 10px; padding-top: 20px">
-                    <div class="col" id="peopleCount" th:if="${programInfo.peopleNum} != -1"></div>
+                    <div class="col" id="peopleCount" th:if="${programInfo.maxParticipants} != -1"></div>
                     <button class="col-3 btn rounded-2" type="button" th:a="${#authorization.expression('isAuthenticated()')}" th:s="${programInfo.programNum}" onclick="openPopup(this.getAttribute('s'), this.getAttribute('a'))">신청하기</button>
                 </div>
             </div>
@@ -318,8 +318,8 @@
             return sTime;
         else if (t === "title")
             return [[${programInfo.title}]];
-        else if (t === "peopleNum")
-            return [[${programInfo.peopleNum}]];
+        else if (t === "maxParticipants")
+            return [[${programInfo.maxParticipants}]];
         else if(t === "endDate")
             return [[${programInfo.endDate}]];
     }
@@ -327,16 +327,16 @@
     function showPeopleCount() {
         let iHtml;
         const pNum = [[${programInfo.programNum}]];
-        if ([[${programInfo.peopleNum}]] !== -1) {
+        if ([[${programInfo.maxParticipants}]] !== -1) {
             fetch(`/program/peopleCount?programNum=${pNum}&viewingDate=${sDate}&viewingTime=${sTime}`, {
             }).then((r) => {
                 return r.text();
             }).then((r) => {
                 let count = Number(r);
-                if ([[${programInfo.peopleNum}]] === count) {
+                if ([[${programInfo.maxParticipants}]] === count) {
                     iHtml = "<span class='badge bg-secondary'>인원 마감</span>";
                 } else
-                    iHtml = "<span>(잔여 " + ([[${programInfo.peopleNum}]] - count) + "명)</span>";
+                    iHtml = "<span>(잔여 " + ([[${programInfo.maxParticipants}]] - count) + "명)</span>";
                 document.getElementById("peopleCount").innerHTML = iHtml;
             })
         }

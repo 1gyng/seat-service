@@ -34,7 +34,7 @@
                 <td th:text="${list.programType == 'offline'}?'대면':'비대면'"></td>
                 <td th:text="${list.programName}"></td>
                 <td th:text="|${list.viewingDate} ${list.viewingTime}|"></td>
-                <td><button class="rounded-pill" th:onclick="|location.href='@{/myPage/{bookingNum}(bookingNum=${list.bookingNum})}'|" type="button">보기</button></td>
+                <td><button class="rounded-pill" th:onclick="|location.href='@{/myPage/{bookingUuid}(bookingUuid=${list.bookingUuid})}'|" type="button">보기</button></td>
             </tr>
             </tbody>
         </table>

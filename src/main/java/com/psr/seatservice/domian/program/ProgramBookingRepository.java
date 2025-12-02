@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProgramBookingRepository extends JpaRepository<ProgramBooking, Long> {
     @Query("SELECT count(*) FROM ProgramBooking b WHERE b.programViewing.programNo = ?1 AND b.programViewing.viewingDate = ?2 AND b.programViewing.viewingTime = ?3 AND b.status != '취소'")
@@ -36,4 +37,6 @@ public interface ProgramBookingRepository extends JpaRepository<ProgramBooking, 
 
     @Query("SELECT new com.psr.seatservice.dto.excel.ExcelDTO(u.name, u.birth, u.phone, u.email, pb.bookingDate, p.programQuestion, pb.programResponse) from ProgramBooking pb left join User u on pb.user.id = u.id left join Program p on pb.programNum = p.programNum where pb.programNum=?1 and pb.viewingDate=?2 and pb.viewingTime=?3")
     List<ExcelDTO> findExcelDTOByProgramNum(Long programNum,String date, String time);
+
+    Optional<ProgramBooking> findByBookingUuid(String uuid);
 }

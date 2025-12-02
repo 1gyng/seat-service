@@ -11,11 +11,13 @@ import com.psr.seatservice.dto.program.request.BizUpdateProgramBookingStatusRequ
 import com.psr.seatservice.dto.program.request.BizUpdateProgramRequest;
 import com.psr.seatservice.dto.program.response.*;
 import com.psr.seatservice.dto.user.request.BookingRequest;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -158,6 +160,7 @@ public class ProgramService {
     public String addBooking(Long programNum, BookingRequest request, User user) {
         int count = getProgramBookingCount(programNum, request.getViewingDate(), request.getViewingTime());
         Program program = getProgramInfo(programNum);
+
         if(count < program.getMaxParticipants() || program.getMaxParticipants() == -1) {
             if(program.getTarget().equals("area")) {
                 //신청대상이 지역일 경우 주소 확인
@@ -172,7 +175,8 @@ public class ProgramService {
                     if (request.getSeatNum() != null && programBookingRepository.existsByProgramNumAndSeatNumAndViewingDateAndViewingTime(programNum, request.getSeatNum(), request.getViewingDate(), request.getViewingTime())) {
                         return "이미 신청된 좌석입니다.";
                     } else {
-                        ProgramBooking programBooking = new ProgramBooking(programNum, request.getViewingDate(), request.getViewingTime(), request.getSeatNum(), "예정", request.getProgramResponse(), user);
+                        String bookingUuid = UUID.randomUUID().toString();
+                        ProgramBooking programBooking = new ProgramBooking(programNum, request.getViewingDate(), request.getViewingTime(), request.getSeatNum(), "예정", request.getProgramResponse(), user, bookingUuid);
                         programBookingRepository.save(programBooking);
                         return null;
                     }
@@ -286,8 +290,15 @@ public class ProgramService {
     }
 
     @Transactional
-    public void bookingDelete(Long bookingNum){
-        programBookingRepository.deleteById(bookingNum);
+    public void deleteBooking(String uuid, User user){
+        ProgramBooking booking = programBookingRepository.findByBookingUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("예약 정보가 존재하지 않습니다."));
+
+        if(!booking.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException("본인의 예약만 취소할 수 있습니다.");
+        }
+
+        programBookingRepository.delete(booking);
     }
 
     public List<ProgramListResponse> getProgramSearchResult(String keyword) {

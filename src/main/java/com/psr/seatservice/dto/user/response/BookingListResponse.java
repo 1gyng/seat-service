@@ -9,15 +9,15 @@ public class BookingListResponse {
     private String programName;
     private String viewingDate;
     private String viewingTime;
-    private Long bookingNum;
+    private String bookingUuid;
     private String status;
     private String programType;
 
-    public BookingListResponse(String programName, String viewingDate, String viewingTime, Long bookingNum, String status, String programType) {
+    public BookingListResponse(String programName, String viewingDate, String viewingTime, String bookingUuid, String status, String programType) {
         this.programName = programName;
         this.viewingDate = viewingDate;
         this.viewingTime = viewingTime;
-        this.bookingNum = bookingNum;
+        this.bookingUuid = bookingUuid;
         this.status = status;
         this.programType = programType;
     }

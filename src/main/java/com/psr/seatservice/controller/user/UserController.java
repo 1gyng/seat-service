@@ -62,9 +62,9 @@ public class UserController {
         model.addAttribute("lists", bookingProgram);
         return "user/bookingList";
     }
-    @GetMapping("/myPage/{bookingNum}")
-    public String userBookingDetail(@PathVariable Long bookingNum, @AuthenticationPrincipal User user, Model model){
-        BookingDetailResponse detailResponse = userService.getBookingDetailByUserId(user, bookingNum);
+    @GetMapping("/myPage/{bookingUuid}")
+    public String userBookingDetail(@PathVariable String bookingUuid, @AuthenticationPrincipal User user, Model model){
+        BookingDetailResponse detailResponse = userService.getBookingDetailByUserId(user, bookingUuid);
         FileDto file = filesService.getFile(detailResponse.getProgramNum());
 
         if(file != null)
@@ -72,9 +72,9 @@ public class UserController {
         model.addAttribute("detail", detailResponse);
         return "user/bookingDetail";
     }
-    @DeleteMapping("/myPage/{bookingNum}")
-    public @ResponseBody ResponseEntity<Void> userBookingDelete(@PathVariable Long bookingNum){
-        programService.bookingDelete(bookingNum);
+    @DeleteMapping("/myPage/{bookingUuid}")
+    public @ResponseBody ResponseEntity<Void> deleteUserBooking(@PathVariable String bookingUuid,@AuthenticationPrincipal User user){
+        programService.deleteBooking(bookingUuid, user);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

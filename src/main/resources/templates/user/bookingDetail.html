@@ -100,8 +100,8 @@
   document.getElementById('deleteProgram').addEventListener('click', function() {
     var jbResult = confirm('취소하시겠습니까?');
     if (jbResult) {
-      var bookingNum = [[${detail.bookingNum}]];
-      fetch(`/myPage/${bookingNum}`, {
+      var bookingUuid = "[[${detail.bookingUuid}]]";
+      fetch(`/myPage/${bookingUuid}`, {
         method: "delete"
       }).then(() => {
         alert('신청이 취소되었습니다.');

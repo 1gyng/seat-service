@@ -23,7 +23,6 @@ public class BizUpdateProgramRequest {
     private List<String> viewingDateAndTime;
     //private Long fileId;//poster
     private String type;
-    @JsonProperty("peopleNum")
     private int maxParticipants;
     private Integer seatCol;
     private String seatingChart;

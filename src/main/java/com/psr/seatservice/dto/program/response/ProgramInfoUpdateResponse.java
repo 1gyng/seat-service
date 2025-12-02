@@ -17,7 +17,6 @@ public class ProgramInfoUpdateResponse {
     private Date endDate; //신청마감일
     private String type;
     private String way;
-    @JsonProperty("peopleNum")
     private int maxParticipants;
     private Integer seatCol;
     private String seatingChart;

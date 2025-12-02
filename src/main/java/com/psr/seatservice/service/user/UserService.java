@@ -39,8 +39,8 @@ public class UserService {
     public List<BookingListResponse> getBookingByUserId(User user){
         return userRepository.findProgramBookingInfoByUserId(user.getId());
     }
-    public BookingDetailResponse getBookingDetailByUserId(User user, Long bookingNum){
-        return userRepository.findProgramBookingDetailByUserId(user.getId(), bookingNum)
+    public BookingDetailResponse getBookingDetailByUserId(User user, String bookingUuid){
+        return userRepository.findProgramBookingDetailByUserId(user.getId(), bookingUuid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 예약 정보가 존재하지 않거나, 본인의 예약이 아닙니다."));
     }
 
